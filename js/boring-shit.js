@@ -1,6 +1,6 @@
 $(function() {
 
-  $("#tsv-input").val();
+  $("#tsv-input").val("Priya\tSenior connector\tEast bay\nAdam\tConnector\tEast bay\nBuck\tConnectee\tEast bay");
 
   var doShit = function () {
     // read in the data
@@ -15,9 +15,12 @@ $(function() {
       return distributeInArea(people, place);
     }), true);
 
-    var tsv_output = "place\tconnector\tconnectee\n"+(_(result).map(function(x) { return x.join(",") }).join("\n"));
+    var output = ("<table class='table'><tr><td>place</td><td>connectee</td>"+
+                      "<td>connector</td><td>senior connector</td></tr>\n"+
+      (_(result).map(function(x) { return "<tr><td>"+x.join("</td><td>")+"</td></tr>" }).join("\n"))
+      + "</table>");
 
-    $("#tsv-output").html(tsv_output);
+    $("#output").html(output);
   }
 
   var splitByPlace = function (data) {
@@ -54,7 +57,7 @@ $(function() {
     var connectees = people["Connectee"]
 
     _(people["Connectee"]).each(function(person) {
-      matches.push([person, randomPick(connectors), randomPick(seniorConnectors)]);
+      matches.push([place, person, randomPick(connectors), randomPick(seniorConnectors)]);
     });
     
     return matches;
