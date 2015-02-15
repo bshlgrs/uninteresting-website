@@ -1,4 +1,7 @@
 $(function() {
+
+  $("#tsv-input").val();
+
   var doShit = function () {
     // read in the data
     var rows = $("#tsv-input").val().split("\n");
@@ -12,7 +15,7 @@ $(function() {
       return distributeInArea(people, place);
     }), true);
 
-    var tsv_output = "place\tconnector\tconnectee(_(result).map(function(x) { return x.join(",") }).join("\n"));
+    var tsv_output = "place\tconnector\tconnectee\n"+(_(result).map(function(x) { return x.join(",") }).join("\n"));
 
     $("#tsv-output").html(tsv_output);
   }
